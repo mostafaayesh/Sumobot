@@ -2,10 +2,10 @@
 ## Team Robonauts
 
 
-## TODO:
-- [ ] Movement
+### TODO:
+- [ ] **Movement**
     - [ ] Motors
-        - [ ] Motor Control Module
+        - [ ] Motor Control Code
     - [ ] Shafts
     - [ ] Wheels
 
