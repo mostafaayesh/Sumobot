@@ -9,7 +9,7 @@
     - [ ] Shafts
     - [ ] Wheels
 
-- [ ] Sensors
+- [ ] **Sensors**
     - [ ] Ultrasonic Sensors
         - [ ] Ultrasonic Distance Code
     - [ ] Line Sensors
@@ -17,30 +17,30 @@
     - [ ] Accelerometer
         - [ ] Detecting Forced Movement
 
-- [ ] Logic (State Machine)
+- [ ] **Logic (State Machine)**
     - [ ] Receiving Data From All Sensors
     - [ ] Making Decisions
         - [ ] Avoiding Collision
         - [ ] Attacking
         - [ ] IDLE 
 
-- [ ] Circuitry
+- [ ] **Circuitry**
     - [ ] Bridge Driver 
         - [ ] L298 
         - [ ] DRV8848
     - [ ] PCB or Protoboard
 
-- [ ] MCU
+- [ ] **MCU**
     - [ ] Arduino
     - [ ] Maple (STM32)
     - [ ] Particle Photon
 
-- [ ] Chassis
+- [ ] **Chassis**
     - [ ] CAD Design
     - [ ] Materials
         - [ ] 3D Printing
 
-- [ ] Power
+- [ ] **Power**
     - [ ] Batteries:
         - [ ] Li-Po
         - [ ] Li-Ion
