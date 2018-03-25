@@ -33,68 +33,102 @@
  */
 
 #include "pindefines.h"
-#include "sensor/ultrasonic.cpp"
-#include "sensor/linesensor.cpp"
+#include "sensors/ultrasonic.cpp"
+#include "sensors/linesensor.cpp"
 #include "motor/motorcontroller.cpp"
 
-enum STATE {
-    IDLE,
-    OFFENCE,
-    DEFENCE
-};
+#define MAX_FWD_SPEED      100
+#define FWD_SPEED          25
+#define BWD_SPEED          90
+#define TURN_SPEED         90
+#define USONIC_THRESH      700
+#define DEBUG // Used to Enable Serial COM
 
 /* Create sensors' objects */
-USonicSensor rightUSonic(RIGHT_USONIC_ECHOPIN, RIGHT_USONIC_TRIGPIN, APPROACHING); // Scenario is used for simulation purposes
-USonicSensor leftUSonic(LEFT_USONIC_ECHOPIN, LEFT_USONIC_TRIGPIN, APPROACHING); // Scenario is used for simulation purposess
+USonicSensor centerUSonic(CENTER_USONIC_ECHOPIN, CENTER_USONIC_TRIGPIN); 
 LineSensor lineSensor1(LINE1_INPUT_PIN);
 LineSensor lineSensor2(LINE2_INPUT_PIN);
-LineSensor lineSensor3(LINE3_INPUT_PIN);
-LineSensor lineSensor4(LINE4_INPUT_PIN);
 
-MotorController motorController(LEFT_MOTOR_PIN, RIGHT_MOTOR_PIN);
+MotorController motorController(MOTOR1_FORWARD_PIN, MOTOR1_BACKWARD_PIN, MOTOR2_FORWARD_PIN, MOTOR2_BACKWARD_PIN);
 
-STATE state = IDLE;
 float rDistance = 0;
 float lDistance = 0;
 bool isLineClose1 = false;
 bool isLineClose2 = false;
-bool isLineClose3 = false;
-bool isLineClose4 = false;
 
 void setup()
 {
-	/* Setup the sensors */
-    rightUSonic.setup();
-    leftUSonic.setup();
+    delay(2000);    
+	/* Setup the sensors and motor controller */
+    centerUSonic.setup(); 
     lineSensor1.setup();
     lineSensor2.setup();
-    lineSensor3.setup();
-    lineSensor4.setup();
-
-    Serial.begin(115200);
+    motorController.setup();
+    #ifdef DEBUG
+        Serial.begin(115200);
+    #endif
 }
+
+int count = 21;
 
 void loop()
 {
-    // Get the Data from Sensors
-    rDistance = rightUSonic.getDistance();
-    lDistance = leftUSonic.getDistance();
+    // Get the Data from Ultrasonic every 20 loops
+    if (count > 20) {
+        rDistance = centerUSonic.getDistance();
+        Serial.println(rDistance);
+        count = 0;
+    }
+    count ++;
+    
+    // Get the data from line sensors
     isLineClose1 = lineSensor1.isLineClose();
-    isLineClose2 = lineSensor1.isLineClose();
-    isLineClose3 = lineSensor1.isLineClose();
-    isLineClose4 = lineSensor1.isLineClose();
+    isLineClose2 = lineSensor2.isLineClose();
+    
+    #ifdef DEBUG_LINE
+        Serial.print("Sensor 1: ");
+        Serial.println(isLineClose1);
+        
+        Serial.print("Sensor 2: ");
+        Serial.println(isLineClose2);
+    #endif
 	
-    Serial.println(rDistance);
-    Serial.println(lDistance);
+    #ifdef DEBUG_USONIC
+        Serial.println(rDistance);
+        Serial.println(lDistance);
+    #endif
 
-    // FSM
-    switch (state) {
-        case IDLE:
-            break;
-        case OFFENCE:
-            break;
-        case DEFENCE:
-            break;
-    };
-    delay(100);
+    if (isLineClose1 || isLineClose2 == 1) {
+        // Backwards for 100 ms
+        motorController.set(BWD_SPEED, 180);
+        int wait = 0;
+        while (wait < 100) {
+            wait++;
+            motorController.update();
+            delay(1);
+        }
+        if (isLineClose1) motorController.set(TURN_SPEED, 270);
+        else if (isLineClose1) motorController.set(TURN_SPEED, 90);
+        wait = 0;
+        // Turns away from the line for 150 ms
+        while (wait < 150) {
+            wait++;
+            motorController.update();
+            
+            delay(1);
+        }
+    }
+
+    if (isLineClose1 && isLineClose2) motorController.set(BWD_SPEED, 180); // Two Sensors detecting the line at the same time
+    else if (isLineClose1) motorController.set(TURN_SPEED, 270); 
+    else if (isLineClose2) motorController.set(TURN_SPEED, 90);
+    else {
+        if(rDistance < 700) motorController.set(MAX_FWD_SPEED, 0); // If the opponent is in front
+        else motorController.set(FWD_SPEED, 0);
+    }
+
+    motorController.update();
+
+    count++;
+    delay(15);
 }

@@ -60,16 +60,14 @@
 
 /*================ Pin Assignment ==================*/
 /*============ Name ===================== Number ==*/
-#define  RIGHT_USONIC_ECHOPIN               D4
-#define  RIGHT_USONIC_TRIGPIN               D2  // Also has INT0
-
-#define  LEFT_USONIC_ECHOPIN                D5
-#define  LEFT_USONIC_TRIGPIN                D3  // Also has INT1
+#define  CENTER_USONIC_ECHOPIN              D4
+#define  CENTER_USONIC_TRIGPIN              D2  
 
 #define  LINE1_INPUT_PIN                    A0
 #define  LINE2_INPUT_PIN                    A1
-#define  LINE3_INPUT_PIN                    A2
-#define  LINE4_INPUT_PIN                    A3
 
-#define RIGHT_MOTOR_PIN                     D10
-#define LEFT_MOTOR_PIN                      D11
+#define  MOTOR1_FORWARD_PIN                 D10
+#define  MOTOR1_BACKWARD_PIN                D11
+
+#define  MOTOR2_FORWARD_PIN                 D5
+#define  MOTOR2_BACKWARD_PIN                D6

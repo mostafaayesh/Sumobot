@@ -29,31 +29,44 @@
  */
 
 /**
- * linesensor.cpp: Line Sensor Modules
+ * ultrasonic.cpp: UltraSonic Sensor Module
  */
 
-class LineSensor
+#define PULSE_WIDTH     10
+#define DISTANCE(DUR)   DUR/2
+#define DEBUG_USONIC
+
+class USonicSensor
 {
   protected:
-    int inputPin;
-
-  private:
-    int getDistance(void)
-    {
-        // Distance can be used to determine if line is close
-    }
-
+    int echoPin;
+    int trigPin;
+    int distance = 0;
+   
   public:
-    LineSensor(int sInputPin)
+    USonicSensor(int sEchoPin, int sTrigPin)
     {
-        inputPin = sInputPin;
+        echoPin = sEchoPin;
+        trigPin = sTrigPin;
     }
+    /* Setup pins*/
     void setup(void)
     {
-        // Setup pins
+        pinMode(echoPin, INPUT);
+        pinMode(trigPin, OUTPUT);
+        digitalWrite(echoPin, LOW);
     }
-    bool isLineClose(void)
-    {
-        // Return true if close to line
+    /* Get the distance from USonic*/
+    int getDistance(void)
+    { 
+        digitalWrite(trigPin, HIGH);
+        delayMicroseconds(PULSE_WIDTH);
+        digitalWrite(trigPin, LOW);
+        distance = DISTANCE(pulseIn(echoPin, HIGH));
+        #ifdef DEBUG_USONIC
+            Serial.print("USonic: " );
+            Serial.println(distance);
+        #endif
+        return distance;
     }
 };
