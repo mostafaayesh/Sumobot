@@ -1,6 +1,7 @@
 # Sumobot Challenge
 ## Team Robonauts
 
+<p align="center"> <img src="images/SumoBot.png"> </p> <br />
 
 ### TODO:
 - [ ] **Movement**
