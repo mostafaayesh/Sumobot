@@ -1,28 +1,29 @@
 # Sumobot Challenge
 ## Team Robonauts
 
+<p align="center"> <img src="images/SumoBot.png"> </p> <br />
 
 ### TODO:
-- [ ] **Movement**
-    - [ ] Motors
-        - [ ] Motor Control Code
-    - [ ] Shafts
-    - [ ] Wheels
+- [x] **Movement**
+    - [x] Motors
+        - [x] Motor Control Code
+    - [x] Shafts
+    - [x] Wheels
 
-- [ ] **Sensors**
-    - [ ] Ultrasonic Sensors
-        - [ ] Ultrasonic Distance Code
-    - [ ] Line Sensors
-        - [ ] Line Detection Code
+- [x] **Sensors**
+    - [x] Ultrasonic Sensors
+        - [x] Ultrasonic Distance Code
+    - [x] Line Sensors
+        - [x] Line Detection Code
     - [ ] Accelerometer
         - [ ] Detecting Forced Movement
 
 - [ ] **Logic (State Machine)**
-    - [ ] Receiving Data From All Sensors
-    - [ ] Making Decisions
+    - [x] Receiving Data From All Sensors
+    - [x] Making Decisions
         - [ ] Avoiding Collision
-        - [ ] Attacking
-        - [ ] IDLE 
+        - [x] Attacking
+        - [x] IDLE 
 
 - [ ] **Circuitry**
     - [ ] Bridge Driver 
@@ -31,18 +32,18 @@
     - [ ] PCB or Protoboard
 
 - [ ] **MCU**
-    - [ ] Arduino
+    - [x] Arduino
     - [ ] Maple (STM32)
     - [ ] Particle Photon
 
-- [ ] **Chassis**
-    - [ ] CAD Design
-    - [ ] Materials
-        - [ ] 3D Printing
+- [x] **Chassis**
+    - [x] CAD Design
+    - [x] Materials
+        - [x] 3D Printing
 
 - [ ] **Power**
-    - [ ] Batteries:
+    - [x] Batteries:
         - [ ] Li-Po
-        - [ ] Li-Ion
+        - [x] Li-Ion
     - [ ] Voltage Regulators (Powering the MCU)
 
